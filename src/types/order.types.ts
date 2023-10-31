@@ -1,6 +1,8 @@
-import { OrderStatusesEnum } from "@/enums/order.enums";
+import { OrderStatusesEnum, OrderActionsEnum } from "@/enums/order.enums";
 
 export type OrderStatus = `${OrderStatusesEnum}`;
+
+export type OrderAction = `${OrderActionsEnum}`;
 
 export interface OrderItem {
   name: string;
@@ -13,5 +15,6 @@ export interface Order {
   price: string;
   orderTime: string;
   status: OrderStatus;
+  action?: OrderAction;
   items: OrderItem[];
 }

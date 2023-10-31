@@ -2,9 +2,10 @@ import { FC, useEffect, useState, useCallback } from "react";
 
 import { MainLayout } from "@/layout/main";
 import { getOrders } from "@/api/orders.api";
-import { Order, OrderStatus } from "@/types/order.types";
+import { Order } from "@/types/order.types";
 
 import { OrderStatusesEnum } from "@/enums/order.enums";
+import { StyledBoardWrapper } from "@/screens/dashboard/styles";
 import { Topbar } from "./components/topbar";
 import { OrdersBoard } from "./components/orders-board";
 
@@ -16,12 +17,15 @@ interface FormattedOrders {
 }
 
 export const Dashboard: FC = () => {
+  const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<Order[]>([]);
 
   const loadOrders = async () => {
+    setLoading(true);
     const response = await getOrders();
     formatBoardOrders(response);
     setOrders(response);
+    setLoading(false);
   };
 
   const formatBoardOrders = useCallback(
@@ -46,10 +50,14 @@ export const Dashboard: FC = () => {
     loadOrders();
   }, []);
 
+  if (loading) return <div>Loading</div>;
+
   return (
     <MainLayout>
       <Topbar />
-      <OrdersBoard orders={formatBoardOrders(orders)} />
+      <StyledBoardWrapper>
+        <OrdersBoard orders={formatBoardOrders(orders)} />
+      </StyledBoardWrapper>
     </MainLayout>
   );
 };

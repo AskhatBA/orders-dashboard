@@ -4,6 +4,7 @@
     "price": "300 560 сум",
     "orderTime": "15:22",
     "status": "NEW",
+    "action": "CANCEL_CONFIRM",
     "items": [
       {
         "name": "Пепси 0,5",
@@ -54,6 +55,37 @@
     ]
   },
   {
+    "id": "334547",
+    "price": "300 560 сум",
+    "orderTime": "12:22",
+    "status": "READY_TO_DELIVER",
+    "action": "FINISH",
+    "items": [
+      {
+        "name": "Гамбургер",
+        "amount": 1,
+        "options": ["С сыром", "Без лука"]
+      }
+    ]
+  },
+  {
+    "id": "311246",
+    "price": "300 560 сум",
+    "orderTime": "11:22",
+    "status": "IN_PROGRESS",
+    "action": "DONE",
+    "items": [
+      {
+        "name": "Пепси 0,5",
+        "amount": 3
+      },
+      {
+        "name": "Лаваш мясной Standart острый",
+        "amount": 2
+      }
+    ]
+  },
+  {
     "id": "321546",
     "price": "300 560 сум",
     "orderTime": "11:22",
@@ -71,6 +103,27 @@
   },
   {
     "id": "321548",
+    "price": "300 560 сум",
+    "orderTime": "22:02",
+    "status": "DELIVERED",
+    "items": [
+      {
+        "name": "Пепси 0,5",
+        "amount": 3
+      },
+      {
+        "name": "Гамбургер",
+        "amount": 1,
+        "options": ["С сыром", "Без лука"]
+      },
+      {
+        "name": "Лаваш мясной Standart острый",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "431548",
     "price": "300 560 сум",
     "orderTime": "22:02",
     "status": "DELIVERED",

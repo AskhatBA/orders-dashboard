@@ -1,9 +1,12 @@
 export const palette = {
   primary: "#0E73F6",
   success: "#22C348",
+  danger: "#F76659",
   text: {
     main: "#1A2024",
     inverted: "#FFFFFF",
+    secondary: "#6E8BB7",
+    gray: "#48535B",
   },
   border: {
     level1: "#E5E9EB",

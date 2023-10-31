@@ -4,3 +4,9 @@ export enum OrderStatusesEnum {
   READY_TO_DELIVER = "READY_TO_DELIVER",
   DELIVERED = "DELIVERED",
 }
+
+export enum OrderActionsEnum {
+  CANCEL_CONFIRM = "CANCEL_CONFIRM",
+  DONE = "DONE",
+  FINISH = "FINISH",
+}

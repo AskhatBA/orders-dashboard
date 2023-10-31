@@ -27,4 +27,5 @@ export const StyledColumnHeader = styled.div<{ background: string }>`
   font-style: normal;
   line-height: 24px;
   letter-spacing: 0.7px;
+  font-feature-settings: "clig" off, "liga" off;
 `;
