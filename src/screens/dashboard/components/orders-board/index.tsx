@@ -110,7 +110,6 @@ export const OrdersBoard: FC<OrdersBoardProps> = ({ orders }) => {
     // @ts-ignore
     newTickets[destinationDroppableId][1] = result[destinationDroppableId];
     setBoardTickets(newTickets);
-    console.log("result", result);
   };
 
   return (
