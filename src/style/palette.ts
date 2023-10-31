@@ -16,6 +16,7 @@ export const palette = {
   },
   gray: {
     400: "#EEF0F2",
+    500: "#9AA6AC",
   },
   blue: {
     600: "#0E73F6",
