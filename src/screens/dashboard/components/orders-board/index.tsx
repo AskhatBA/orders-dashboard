@@ -1,5 +1,11 @@
 import { FC, ReactElement, useState } from "react";
-import { DragDropContext, Droppable, Draggable, OnDragEndResponder } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  OnDragEndResponder,
+  DraggableLocation,
+} from "react-beautiful-dnd";
 
 import { Order, OrderStatus } from "@/types/order.types";
 
@@ -10,6 +16,7 @@ import {
   StyledColumnHeader,
   StyledBoardWrapper,
   StyledColumnWrapper,
+  StyledNoTickets,
 } from "./styles";
 
 interface OrdersBoardProps {
@@ -53,9 +60,13 @@ const DroppableArea: FC<{ orderColumn: [string, Order[]]; index: number }> = ({
           const { innerRef, droppableProps } = provided;
           return (
             <StyledDroppableColumn ref={innerRef} {...droppableProps}>
-              {orders.map((order, indx) => (
-                <DraggableCard key={order.id} order={order} index={indx} />
-              ))}
+              {orders.length ? (
+                orders.map((order, indx) => (
+                  <DraggableCard key={order.id} order={order} index={indx} />
+                ))
+              ) : (
+                <StyledNoTickets>Нет заказов</StyledNoTickets>
+              )}
             </StyledDroppableColumn>
           );
         }}
@@ -67,10 +78,29 @@ const DroppableArea: FC<{ orderColumn: [string, Order[]]; index: number }> = ({
 export const OrdersBoard: FC<OrdersBoardProps> = ({ orders }) => {
   const [boardTickets, setBoardTickets] = useState<[string, Order[]][]>(orders);
 
-  const reorder = (list: Order[], startIndex: number, endIndex: number) => {
+  const reorderTickets = (list: Order[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  const moveTicket = (
+    source: Order[],
+    destination: Order[],
+    droppableSource: DraggableLocation,
+    droppableDestination: DraggableLocation,
+  ) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result: { [key: string]: any } = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
 
     return result;
   };
@@ -82,7 +112,7 @@ export const OrdersBoard: FC<OrdersBoardProps> = ({ orders }) => {
     const destinationDroppableId = +destination.droppableId;
 
     if (sourceDroppableId === destinationDroppableId) {
-      const reordered = reorder(
+      const reordered = reorderTickets(
         boardTickets[destinationDroppableId][1],
         source.index,
         destination.index,
@@ -93,22 +123,15 @@ export const OrdersBoard: FC<OrdersBoardProps> = ({ orders }) => {
       return;
     }
 
-    const sourceClone = Array.from(boardTickets[sourceDroppableId][1]);
-    const destClone = Array.from(boardTickets[destinationDroppableId][1]);
-    const [removed] = sourceClone.splice(source.index, 1);
-
-    destClone.splice(destination.index, 0, removed);
-
-    const result = {};
-    // @ts-ignore
-    result[source.droppableId] = sourceClone;
-    // @ts-ignore
-    result[destination.droppableId] = destClone;
+    const movedTickets = moveTicket(
+      boardTickets[sourceDroppableId][1],
+      boardTickets[destinationDroppableId][1],
+      source,
+      destination,
+    );
     const newTickets = [...boardTickets];
-    // @ts-ignore
-    newTickets[sourceDroppableId][1] = result[sourceDroppableId];
-    // @ts-ignore
-    newTickets[destinationDroppableId][1] = result[destinationDroppableId];
+    newTickets[sourceDroppableId][1] = movedTickets[sourceDroppableId];
+    newTickets[destinationDroppableId][1] = movedTickets[destinationDroppableId];
     setBoardTickets(newTickets);
   };
 
