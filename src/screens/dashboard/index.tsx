@@ -3,9 +3,10 @@ import { FC, useEffect, useState, useCallback } from "react";
 import { MainLayout } from "@/layout/main";
 import { getOrders } from "@/api/orders.api";
 import { Order } from "@/types/order.types";
-
 import { OrderStatusesEnum } from "@/enums/order.enums";
 import { StyledBoardWrapper } from "@/screens/dashboard/styles";
+import { PageLoader } from "@/components/page-loader";
+
 import { Topbar } from "./components/topbar";
 import { OrdersBoard } from "./components/orders-board";
 
@@ -50,7 +51,7 @@ export const Dashboard: FC = () => {
     loadOrders();
   }, []);
 
-  if (loading) return <div>Loading</div>;
+  if (loading) return <PageLoader />;
 
   return (
     <MainLayout>
